@@ -38,6 +38,54 @@ export async function POST(request: Request) {
       )
     }
 
+    // Check user subscription and reading limits
+    const { data: subscription } = await supabase
+      .from('user_subscriptions')
+      .select('plan_id, status')
+      .eq('user_id', user.id)
+      .single()
+
+    const currentPlan = subscription?.plan_id || 'free'
+    const planStatus = subscription?.status || 'active'
+
+    // Get user's reading count for current month
+    const startOfMonth = new Date()
+    startOfMonth.setDate(1)
+    startOfMonth.setHours(0, 0, 0, 0)
+
+    const { count: readingsThisMonth } = await supabase
+      .from('readings')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .gte('created_at', startOfMonth.toISOString())
+
+    // Check if user has reached free limit
+    if (currentPlan === 'free' && (readingsThisMonth || 0) >= 3) {
+      return NextResponse.json(
+        { 
+          error: 'Reading limit reached',
+          message: 'You have reached your free reading limit. Upgrade to Pro for unlimited readings.',
+          currentPlan,
+          readingsThisMonth: readingsThisMonth || 0,
+          limit: 3,
+        },
+        { status: 403 }
+      )
+    }
+
+    // Check if subscription is active
+    if (currentPlan !== 'free' && planStatus !== 'active') {
+      return NextResponse.json(
+        { 
+          error: 'Subscription inactive',
+          message: 'Your subscription is not active. Please update your payment method.',
+          currentPlan,
+          planStatus,
+        },
+        { status: 403 }
+      )
+    }
+
     // Draw cards based on spread type
     const cards = getRandomCards(spread.cardCount)
 
@@ -85,6 +133,8 @@ export async function POST(request: Request) {
         interpretation,
         spread,
         readingId: reading?.id,
+        readingsThisMonth: (readingsThisMonth || 0) + 1,
+        currentPlan,
       },
     })
   } catch (error) {
