@@ -140,3 +140,33 @@
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* Card flip animation */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotateY-180 {
+  transform: rotateY(180deg);
+}
+
+/* Mystical card glow */
+.card-glow {
+  box-shadow: 0 0 30px rgba(107, 33, 168, 0.5),
+              0 0 60px rgba(107, 33, 168, 0.3),
+              0 0 90px rgba(107, 33, 168, 0.1);
+}
+
+.card-glow-gold {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.5),
+              0 0 60px rgba(212, 175, 55, 0.3),
+              0 0 90px rgba(212, 175, 55, 0.1);
+}
