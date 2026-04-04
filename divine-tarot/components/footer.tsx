@@ -1,7 +1,94 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
-import { Sparkles, Mail, Heart } from 'lucide-react'
+import { Sparkles, Mail, Heart, Check, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+
+function NewsletterForm() {
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'newsletter',
+          email,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to subscribe')
+      }
+
+      setIsSuccess(true)
+      setEmail('')
+    } catch (err) {
+      setError('Failed to subscribe. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="mt-12 xl:mt-0">
+        <h3 className="text-sm font-semibold font-serif tracking-wide text-foreground mb-6">
+          Stay Connected
+        </h3>
+        <div className="flex items-center gap-2 text-green-600">
+          <Check className="h-5 w-5" />
+          <span className="text-sm">Thanks for subscribing!</span>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-12 xl:mt-0">
+      <h3 className="text-sm font-semibold font-serif tracking-wide text-foreground mb-6">
+        Stay Connected
+      </h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Subscribe for spiritual insights and updates.
+      </p>
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <input
+          type="email"
+          placeholder="Your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="flex-1 px-4 py-2 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+        />
+        <Button 
+          type="submit" 
+          className="btn-premium rounded-xl px-4" 
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Mail className="h-4 w-4" />
+          )}
+        </Button>
+      </form>
+      {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
+    </div>
+  )
+}
 
 const navigation = {
   main: [
@@ -118,24 +205,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="mt-12 xl:mt-0">
-            <h3 className="text-sm font-semibold font-serif tracking-wide text-foreground mb-6">
-              Stay Connected
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Subscribe for spiritual insights and updates.
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-4 py-2 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-              />
-              <Button className="btn-premium rounded-xl px-4">
-                <Mail className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
+          <NewsletterForm />
         </div>
         
         <div className="mt-16 pt-8 border-t border-border/20">

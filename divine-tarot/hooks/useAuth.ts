@@ -25,7 +25,11 @@ export function useAuth(): AuthState & AuthActions {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClient()
+  const [supabase, setSupabase] = useState<ReturnType<typeof createClient> | null>(null)
+
+  useEffect(() => {
+    setSupabase(createClient())
+  }, [])
 
   const clearError = useCallback(() => {
     setError(null)
@@ -61,6 +65,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [])
 
   useEffect(() => {
+    if (!supabase) return
+
     const getUser = async () => {
       try {
         const {
@@ -136,6 +142,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase])
 
   const signIn = useCallback(async (email: string, password: string) => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+    
     setError(null)
     setLoading(true)
     
@@ -162,6 +170,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase, handleError])
 
   const signUp = useCallback(async (email: string, password: string, name: string) => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+
     setError(null)
     setLoading(true)
 
@@ -195,6 +205,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase, handleError])
 
   const signInWithGoogle = useCallback(async () => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+
     setError(null)
     setLoading(true)
 
@@ -227,6 +239,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase, handleError])
 
   const signInWithGitHub = useCallback(async () => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+
     setError(null)
     setLoading(true)
 
@@ -255,6 +269,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase, handleError])
 
   const signOut = useCallback(async () => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+
     setError(null)
     setLoading(true)
 
@@ -279,6 +295,8 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase, handleError])
 
   const resetPassword = useCallback(async (email: string) => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+
     setError(null)
     setLoading(true)
 
@@ -307,10 +325,17 @@ export function useAuth(): AuthState & AuthActions {
   }, [supabase, handleError])
 
   const updatePassword = useCallback(async (newPassword: string) => {
+    if (!supabase) return { error: new Error("Authentication not initialized") }
+
     setError(null)
     setLoading(true)
 
     try {
+      if (!supabase) {
+        setError("Authentication not initialized")
+        return { error: new Error("Authentication not initialized") }
+      }
+      
       const { error: updateError } = await supabase.auth.updateUser({
         password: newPassword,
       })

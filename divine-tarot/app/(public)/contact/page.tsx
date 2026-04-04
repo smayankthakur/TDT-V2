@@ -11,13 +11,37 @@ export default function ContactPage() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Simulate form submission
-    setTimeout(() => {
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contact',
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+
       setSubmitted(true)
-    }, 1000)
+    } catch (err) {
+      setError('Failed to send message. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (
@@ -33,11 +57,10 @@ export default function ContactPage() {
     return (
       <div className="container py-12">
         <div className="max-w-2xl mx-auto text-center space-y-6">
-          <div className="text-6xl mb-4">✉️</div>
+          <div className="text-6xl mb-4">✨</div>
           <h1 className="text-4xl font-bold font-serif">Thank You!</h1>
           <p className="text-xl text-muted-foreground">
-            Your message has been sent successfully. We'll get back to you within
-            24-48 hours.
+            Thanks! Ginni will reach out soon 💜
           </p>
           <Button onClick={() => setSubmitted(false)} variant="outline">
             Send Another Message
@@ -128,8 +151,12 @@ export default function ContactPage() {
               />
             </div>
 
-            <Button type="submit" size="lg" className="w-full">
-              Send Message
+            {error && (
+              <p className="text-sm text-red-500">{error}</p>
+            )}
+
+            <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Sending...' : 'Send Message'}
             </Button>
           </form>
         </div>
