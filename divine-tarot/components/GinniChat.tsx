@@ -208,8 +208,8 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
             }}
             className="fixed bottom-24 right-6 z-50"
             style={{
-              width: '340px',
-              height: '480px',
+              width: '30%',
+              height: '80vh',
             }}
           >
             {/* Chatbox Container */}
