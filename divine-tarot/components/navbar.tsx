@@ -61,7 +61,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           {/* Theme Toggle */}
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10">
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -80,7 +80,7 @@ export function Navbar() {
                 System
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
 
           {/* Login Button */}
           <Button asChild className="btn-premium rounded-full px-6 hidden sm:flex">

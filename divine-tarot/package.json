@@ -1,8 +1,10 @@
 {
   "name": "divine-tarot",
   "version": "1.0.0",
+  "private": true,
   "description": "AI-powered Tarot platform - Divine Tarot",
   "scripts": {
+    "vercel-build": "next build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
