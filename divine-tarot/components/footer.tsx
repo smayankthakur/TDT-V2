@@ -70,8 +70,8 @@ export function Footer() {
                 <Image
                   src="/logo.png"
                   alt="The Divine Tarot"
-                  width={200}
-                  height={80}
+                  width={240}
+                  height={135}
                   className="h-full w-auto object-contain"
                 />
               </div>
