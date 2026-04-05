@@ -104,7 +104,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">Email</p>
-                      <p className="text-gray-600">hello@divinetarot.com</p>
+                      <p className="text-gray-600">hello@thedivinetarot.com</p>
                     </div>
                   </div>
 
