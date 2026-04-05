@@ -207,6 +207,15 @@ export function Footer() {
               >
                 Terms
               </Link>
+              <span className="text-gray-300">|</span>
+              <a
+                href="https://sitelytic.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-[#888888] hover:text-[#A78BFA] hover:underline transition-colors"
+              >
+                Designed & Developed by Sitelytic
+              </a>
             </div>
           </div>
         </div>
