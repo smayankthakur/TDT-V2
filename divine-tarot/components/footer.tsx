@@ -81,7 +81,7 @@ export function Footer() {
                 The Divine Tarot
               </h3> */}
               <p className="text-xs text-[#666666] mt-2 leading-relaxed">
-                Guiding you with clarity, intuition, and spiritual insight. Talk to Ginni for personalized tarot guidance anytime.
+                Guiding you with clarity, intuition, and spiritual insight. Talk to Bharti Singh for personalized tarot guidance anytime.
               </p>
             </div>
             <p className="text-xs text-[#A78BFA] flex items-center gap-1">
@@ -156,7 +156,7 @@ export function Footer() {
             {isSuccess ? (
               <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-2 rounded-full">
                 <Check className="h-4 w-4" />
-                <span className="text-sm">You're now connected with Ginni 💜</span>
+                <span className="text-sm">You're now connected with Bharti Singh 💜</span>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
@@ -181,7 +181,7 @@ export function Footer() {
                 </Button>
                 {error && <p className="text-xs text-red-500">{error}</p>}
                 <p className="text-xs text-[#666666]">
-                  Get guidance, insights & updates from Ginni 💜
+                  Get guidance, insights & updates from Bharti Singh 💜
                 </p>
               </form>
             )}

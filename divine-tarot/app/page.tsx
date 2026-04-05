@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Sparkles, Heart, ArrowRight, MessageCircle, BookOpen, ChevronRight, Star } from 'lucide-react'
+import { Sparkles, Heart, ArrowRight, Shield, MessageCircle, BookOpen, ChevronRight, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const fadeInUp = {
@@ -46,42 +46,6 @@ function FloatingOrbs() {
 }
 
 export default function HomePage() {
-  const steps = [
-    {
-      icon: MessageCircle,
-      title: "Share What's on Your Mind",
-      description: "Tell Ginni what you're going through or what questions you have."
-    },
-    {
-      icon: Sparkles,
-      title: "Receive Personal Guidance",
-      description: "Get intuitive insights drawn from traditional tarot wisdom and real understanding."
-    },
-    {
-      icon: Heart,
-      title: "Find Clarity & Direction",
-      description: "Walk away with clarity on your path and confidence in your next steps."
-    }
-  ]
-
-  const testimonials = [
-    {
-      quote: "Ginni helped me see things clearly during a confusing time in my life. Her readings feel personal, not automated.",
-      author: "Sarah M.",
-      role: "Seeker"
-    },
-    {
-      quote: "I've tried other tarot apps, but this feels different. There's real care and intuition here.",
-      author: "James K.",
-      role: "Seeker"
-    },
-    {
-      quote: "Ginni creates such a safe, judgment-free space. I always feel heard and understood.",
-      author: "Elena R.",
-      role: "Seeker"
-    }
-  ]
-
   return (
     <div className="relative overflow-hidden">
       {/* Hero Section */}
@@ -103,34 +67,29 @@ export default function HomePage() {
             <motion.h1 
               variants={fadeInUp}
               className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight"
+              style={{ fontFamily: 'Georgia, serif' }}
             >
-              Connect with a real tarot reader for{' '}
-              <span className="text-[#A78BFA]">guidance, clarity, and peace.</span>
+              Find Clarity, Peace & Direction When You Need It Most
             </motion.h1>
             
             <motion.p 
               variants={fadeInUp}
               className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
             >
-              Sometimes life feels overwhelming. Let Ginni help you find clarity and direction through personal tarot readings.
+              Connect with a real tarot reader and gently explore what's on your mind. Whether you're feeling uncertain, overwhelmed, or simply seeking guidance — you're not alone.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="px-8 py-6 text-base bg-gradient-to-r from-[#A78BFA] to-[#C4B5FD] text-white rounded-full hover:scale-105 transition-transform">
                 <Link href="/booking">
-                  Book a Reading
+                  Start Your Personal Reading
                   <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="px-8 py-6 text-base rounded-full border-gray-300 text-gray-700 hover:bg-gray-50">
-                <Link href="/about">
-                  Learn More
                 </Link>
               </Button>
             </motion.div>
 
             <motion.p variants={fadeInUp} className="text-sm text-gray-500">
-              Private & confidential • Judgment-free space
+              Private • Personal • Judgment-free
             </motion.p>
           </div>
         </motion.div>
@@ -138,8 +97,66 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F9FAFB] to-transparent" />
       </section>
 
-      {/* How It Works */}
-      <section className="py-20 bg-white">
+      {/* Section 2 - A Calm Introduction */}
+      <section className="py-24 bg-white">
+        <div className="container px-4">
+          <motion.div 
+            className="max-w-2xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+              Sometimes, life feels unclear.
+            </h2>
+            <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
+              <p>
+                You may be searching for answers, trying to understand your emotions, or standing at a point where decisions feel heavy.
+              </p>
+              <p>
+                Tarot offers a quiet space to pause, reflect, and see things from a new perspective.
+              </p>
+              <p>
+                Here, you're not being told what will happen — you're being guided to understand what you already feel, but may not yet see clearly.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section 3 - Meet Your Reader */}
+      <section className="py-24 bg-[#F9FAFB]">
+        <FloatingOrbs />
+        <div className="container px-4 relative z-10">
+          <motion.div 
+            className="max-w-2xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+              Meet Your Reader
+            </h2>
+            <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+              Hi, I'm Bharti Singh.
+            </h3>
+            <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
+              <p>
+                I offer intuitive tarot readings designed to help you reconnect with your thoughts, emotions, and direction.
+              </p>
+              <p>
+                My approach is simple — I listen, I understand, and I guide.
+              </p>
+              <p>
+                You don't need perfect questions. You just need to show up as you are.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section 4 - How It Works */}
+      <section className="py-24 bg-white">
         <div className="container px-4">
           <motion.div 
             className="text-center mb-16"
@@ -147,77 +164,121 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">
-              How a Reading Works
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              How It Works
             </h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
-              Three simple steps to receive personal guidance
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-12 max-w-4xl mx-auto">
+            {[
+              {
+                step: "1",
+                title: "Share What's On Your Mind",
+                description: "Tell me about your situation, your thoughts, or what's been bothering you."
+              },
+              {
+                step: "2",
+                title: "I Connect & Read the Cards",
+                description: "Using tarot and intuition, I explore the energy around your situation."
+              },
+              {
+                step: "3",
+                title: "You Receive Clarity & Guidance",
+                description: "You'll walk away with a clearer understanding and a sense of direction."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+              >
+                <div className="w-12 h-12 rounded-full bg-[#A78BFA] text-white flex items-center justify-center mx-auto mb-6 text-lg font-semibold">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5 - Who This Is For */}
+      <section className="py-24 bg-[#F9FAFB]">
+        <div className="container px-4">
+          <motion.div 
+            className="max-w-2xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+              Who This Is For
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              {[
+                "Feeling confused or emotionally overwhelmed",
+                "Facing uncertainty in love or relationships",
+                "Struggling with decisions about your future",
+                "Looking for clarity, reassurance, or peace"
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center gap-3 p-4 bg-white border border-gray-100 rounded-xl"
+                >
+                  <Heart className="w-5 h-5 text-[#A78BFA] flex-shrink-0" />
+                  <span className="text-gray-700">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            <p className="text-gray-600 text-lg">
+              If something has been weighing on your heart, this is a safe place to explore it.
             </p>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                className="text-center p-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-              >
-                <div className="w-16 h-16 rounded-2xl bg-[#A78BFA]/10 flex items-center justify-center mx-auto mb-6">
-                  <step.icon className="w-8 h-8 text-[#A78BFA]" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-[#F9FAFB]">
+      {/* Section 6 - Trust & Safety */}
+      <section className="py-24 bg-white">
         <div className="container px-4">
           <motion.div 
-            className="text-center mb-16"
+            className="max-w-2xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">
-              What Seekers Are Saying
+            <Shield className="w-12 h-12 text-[#A78BFA] mx-auto mb-6" />
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+              Trust & Safety
             </h2>
+            <p className="text-gray-600 text-lg mb-4">
+              Your experience here is:
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              {["Completely private", "Judgment-free", "Handled with care and respect"].map((item, index) => (
+                <span key={index} className="px-4 py-2 bg-[#A78BFA]/10 text-[#A78BFA] rounded-full text-sm font-medium">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <p className="text-gray-600 text-lg">
+              This is your space to open up freely and honestly.
+            </p>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.author}
-                className="p-8 bg-white rounded-2xl shadow-sm"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#A78BFA] text-[#A78BFA]" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-6 leading-relaxed italic">
-                  "{testimonial.quote}"
-                </p>
-                <p className="font-medium text-gray-900">{testimonial.author}</p>
-                <p className="text-sm text-gray-500">{testimonial.role}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-[#F9FAFB]">
+      {/* Final CTA Section */}
+      <section className="py-24 bg-gradient-to-b from-white to-[#F9FAFB]">
         <FloatingOrbs />
         <div className="container px-4 relative z-10">
           <motion.div 
@@ -226,20 +287,26 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
-              Ready for Your Reading?
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+              You don't need to have everything figured out.
             </h2>
             <p className="text-lg text-gray-600 max-w-lg mx-auto">
-              Connect with Ginni and discover what the cards have to say about your journey.
+              Sometimes, a little clarity is all it takes to move forward.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="px-8 py-6 text-base bg-gradient-to-r from-[#A78BFA] to-[#C4B5FD] text-white rounded-full">
+              <Button asChild size="lg" className="px-8 py-6 text-base bg-gradient-to-r from-[#A78BFA] to-[#C4B5FD] text-white rounded-full hover:scale-105 transition-transform">
                 <Link href="/booking">
-                  Book a Reading
+                  Book Your Personal Reading
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
             </div>
+            <p className="text-gray-500 pt-4">
+              I'll be here to listen and guide you.
+            </p>
+            <p className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+              — Bharti Singh
+            </p>
           </motion.div>
         </div>
       </section>
