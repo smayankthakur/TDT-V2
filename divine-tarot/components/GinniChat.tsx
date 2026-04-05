@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Moon, ExternalLink, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useGinniChat } from './GinniChatProvider'
 
 interface GinniFloatingButtonProps {
   onOpen?: () => void
@@ -27,7 +28,6 @@ export function GinniFloatingButton({ onOpen, isChatOpen, className }: GinniFloa
 
   return (
     <div className={cn("fixed bottom-6 right-6 z-50", className)}>
-      {/* Nudge Tooltip */}
       <AnimatePresence>
         {showNudge && !isChatOpen && (
           <motion.div
@@ -46,7 +46,6 @@ export function GinniFloatingButton({ onOpen, isChatOpen, className }: GinniFloa
         )}
       </AnimatePresence>
 
-      {/* Main Button */}
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -139,7 +138,6 @@ function FallbackMessage({ onOpenExternal }: { onOpenExternal: () => void }) {
   )
 }
 
-// Desktop Chatbox - anchored above button
 interface GinniChatBoxProps {
   isOpen: boolean
   onClose: () => void
@@ -171,7 +169,6 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
     }
   }, [isOpen])
 
-  // Handle ESC key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -186,7 +183,6 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -194,8 +190,6 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
             className="fixed inset-0 z-40"
             onClick={onClose}
           />
-
-          {/* Chatbox - anchored above button */}
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -212,14 +206,12 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
               height: '80vh',
             }}
           >
-            {/* Chatbox Container */}
             <div className={cn(
               "w-full h-full",
               "bg-gradient-to-b from-card via-card to-muted/50",
               "border border-border/50 shadow-2xl shadow-purple-500/20 rounded-2xl",
               "flex flex-col overflow-hidden"
             )}>
-              {/* Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-gradient-to-r from-violet-500/10 to-amber-500/10">
                 <div className="flex items-center gap-3">
                   <motion.div
@@ -249,7 +241,6 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
                 </button>
               </div>
 
-              {/* Content */}
               <div className="flex-1 relative bg-card/50">
                 {isLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-card/80 backdrop-blur-sm z-10">
@@ -282,7 +273,6 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
               </div>
             </div>
 
-            {/* Arrow pointing to button */}
             <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
               <div className="w-5 h-5 bg-card border-r border-b border-border/50 rotate-45 rounded-sm" />
             </div>
@@ -293,7 +283,6 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
   )
 }
 
-// Mobile version - full screen
 function GinniChatBoxMobile({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [iframeError, setIframeError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -330,7 +319,6 @@ function GinniChatBoxMobile({ isOpen, onClose }: { isOpen: boolean; onClose: () 
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="fixed inset-0 z-50 bg-background flex flex-col"
         >
-          {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-card">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-400 to-amber-300 flex items-center justify-center">
@@ -352,7 +340,6 @@ function GinniChatBoxMobile({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             </button>
           </div>
 
-          {/* Content */}
           <div className="flex-1 relative bg-card/50">
             {isLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-card/80 backdrop-blur-sm z-10">
@@ -389,10 +376,14 @@ function GinniChatBoxMobile({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   )
 }
 
-// Main component
 export function GinniChat() {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen: contextIsOpen, openChat, closeChat } = useGinniChat()
+  const [internalIsOpen, setInternalIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+
+  const isOpen = contextIsOpen !== undefined ? contextIsOpen : internalIsOpen
+  const handleOpen = contextIsOpen !== undefined ? openChat : () => setInternalIsOpen(true)
+  const handleClose = contextIsOpen !== undefined ? closeChat : () => setInternalIsOpen(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -403,13 +394,13 @@ export function GinniChat() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  const handleOpen = useCallback(() => {
-    setIsOpen(true)
-  }, [])
-
-  const handleClose = useCallback(() => {
-    setIsOpen(false)
-  }, [])
+  useEffect(() => {
+    const handleOpenChat = () => {
+      handleOpen()
+    }
+    window.addEventListener('openGinniChat', handleOpenChat)
+    return () => window.removeEventListener('openGinniChat', handleOpenChat)
+  }, [handleOpen])
 
   return (
     <>
@@ -421,6 +412,11 @@ export function GinniChat() {
       )}
     </>
   )
+}
+
+export function useGinniChatContext() {
+  const { openChat } = useGinniChat()
+  return openChat
 }
 
 export default GinniChat

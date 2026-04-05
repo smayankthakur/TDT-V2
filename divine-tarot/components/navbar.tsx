@@ -5,112 +5,75 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Moon, Sun, Menu, X } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Start Reading', href: '/tarot' },
-  { name: 'Guidance Hub', href: '/blog' },
+  { name: 'About', href: '/about' },
+  { name: 'Book Personal Reading', href: '/booking' },
 ]
 
 export function Navbar() {
   const pathname = usePathname()
-  const { setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
-      <nav className="container flex h-16 items-center justify-between px-4 md:px-8 lg:px-12">
-        {/* Left: Logo */}
-        <div className="flex items-center">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <Image
-                src="/logo.png"
-                alt="Divine Tarot"
-                width={48}
-                height={48}
-                className="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 rounded-full bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md" />
-            </div>
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur-md">
+      <nav className="container flex h-16 items-center justify-between px-4 md:px-8">
+        {/* LEFT SECTION - Logo */}
+        <div className="flex items-center mr-6">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Divine Tarot"
+              width={120}
+              height={40}
+              className="h-10 w-auto"
+            />
           </Link>
         </div>
 
-        {/* Center: Navigation Links */}
-        <div className="hidden md:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="flex items-center gap-1">
+        {/* CENTER SECTION - Nav Links */}
+        <div className="hidden md:flex items-center justify-center flex-1">
+          <div className="flex items-center gap-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'text-sm font-medium transition-all duration-200 px-4 py-2 relative group',
+                  'text-sm font-medium transition-all duration-200 relative group py-1',
                   pathname === item.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-[#7C3AED]'
+                    : 'text-gray-800 hover:text-[#7C3AED]'
                 )}
               >
                 {item.name}
                 <span className={cn(
-                  'absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 bg-primary/60 rounded-full transition-all duration-200',
-                  pathname === item.href ? 'w-full' : 'group-hover:w-1/2'
+                  'absolute bottom-0 left-0 h-0.5 w-0 bg-[#7C3AED] rounded-full transition-all duration-200',
+                  pathname === item.href ? 'w-full' : 'group-hover:w-full'
                 )} />
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Right: CTA + Avatar */}
+        {/* RIGHT SECTION - CTA Button */}
         <div className="flex items-center gap-3">
-          {/* Login Button - Soft Gold/Lavender Gradient */}
           <Button 
-            asChild 
-            className="hidden sm:flex rounded-full px-5 py-5 text-sm font-medium bg-gradient-to-r from-lavender-300 to-lavender-400 text-foreground hover:from-lavender-400 hover:to-lavender-500 hover:scale-[1.03] transition-all duration-200 shadow-sm border border-lavender-200/50"
+            asChild
+            className="hidden sm:flex rounded-full px-5 py-2 text-sm font-medium bg-gradient-to-r from-lavender-300 to-lavender-400 text-white hover:scale-105 hover:brightness-105 transition-all duration-200"
           >
-            <Link href="/login">Begin Your Journey</Link>
+            <Link href="/contact">
+              Contact
+            </Link>
           </Button>
-
-          {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-9 w-9 rounded-full ring-1 ring-border hover:ring-primary/30 transition-all duration-200">
-                <Avatar className="h-9 w-9">
-                  <AvatarImage src="/avatars/01.png" alt="@user" />
-                  <AvatarFallback className="bg-gradient-to-br from-lavender-300 to-lavender-500 text-foreground text-sm">U</AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-card border-border" align="end" forceMount>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="flex items-center">Dashboard</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/profile">Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/wallet">Wallet</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/login">Sign In</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
 
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden rounded-full"
+            className="md:hidden rounded-full text-gray-800"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -124,7 +87,7 @@ export function Navbar() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-background/95 backdrop-blur-md">
+        <div className="md:hidden border-t bg-white">
           <div className="space-y-1 px-4 py-4">
             {navigation.map((item) => (
               <Link
@@ -133,8 +96,8 @@ export function Navbar() {
                 className={cn(
                   'block rounded-lg px-4 py-3 text-base font-medium transition-all duration-200',
                   pathname === item.href
-                    ? 'bg-accent text-foreground'
-                    : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                    ? 'bg-lavender-50 text-[#7C3AED]'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -143,9 +106,11 @@ export function Navbar() {
             ))}
             <Button 
               asChild 
-              className="w-full mt-4 rounded-full bg-gradient-to-r from-lavender-300 to-lavender-400 text-foreground hover:from-lavender-400 hover:to-lavender-500 transition-all duration-200 shadow-sm"
+              className="w-full mt-4 rounded-full bg-gradient-to-r from-lavender-300 to-lavender-400 text-white"
             >
-              <Link href="/login">Begin Your Journey</Link>
+              <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                Contact
+              </Link>
             </Button>
           </div>
         </div>

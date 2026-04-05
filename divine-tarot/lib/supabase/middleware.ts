@@ -30,11 +30,12 @@ const publicRoutes = [
   '/about',
   '/ai-guide',
   '/blog',
+  '/booking',
   '/contact',
+  '/faq',
+  '/privacy-policy',
   '/store',
-  '/tarot',
   '/terms',
-  '/privacy',
 ]
 
 export async function updateSession(request: NextRequest) {

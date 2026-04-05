@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Sparkles, Star, Heart, ArrowRight, MessageCircle, BookOpen, CreditCard, Users, ChevronRight, Sparkle } from 'lucide-react'
+import { Sparkles, Star, Heart, ArrowRight, MessageCircle, BookOpen, ChevronRight, Sparkle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -75,6 +75,11 @@ function TarotCardFloat({ delay }: { delay: number }) {
   )
 }
 
+function openChat() {
+  const event = new CustomEvent('openGinniChat')
+  window.dispatchEvent(event)
+}
+
 export default function HomePage() {
   const [question, setQuestion] = useState('')
 
@@ -86,8 +91,8 @@ export default function HomePage() {
     },
     {
       icon: Sparkles,
-      title: "Shuffle the Cards",
-      description: "Let the energy flow through you as the cards are drawn. Trust your first impressions."
+      title: "Connect with Ginni",
+      description: "Our AI spiritual companion draws on tarot wisdom to provide personalized insights for you."
     },
     {
       icon: BookOpen,
@@ -137,11 +142,9 @@ export default function HomePage() {
 
   return (
     <div className="relative overflow-hidden">
-      {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center mystical-gradient">
         <FloatingOrbs />
         
-        {/* Decorative tarot cards */}
         <TarotCardFloat delay={0} />
         <TarotCardFloat delay={1.5} />
         <TarotCardFloat delay={3} />
@@ -181,24 +184,20 @@ export default function HomePage() {
                 onChange={(e) => setQuestion(e.target.value)}
                 className="h-14 text-lg bg-white border border-border shadow-soft focus:ring-2 focus:ring-primary/30"
               />
-              <Button asChild size="lg" className="h-14 px-8 btn-premium text-lg rounded-2xl">
-                <Link href={question ? `/tarot?question=${encodeURIComponent(question)}` : '/tarot'}>
-                  Start Your Reading
-                </Link>
+              <Button onClick={openChat} size="lg" className="h-14 px-8 btn-premium text-lg rounded-2xl">
+                Start Your Reading
               </Button>
             </motion.div>
 
             <motion.p variants={fadeInUp} className="text-sm text-muted-foreground">
-              Free to try • No card required • Instant results
+              Free to try • Instant guidance • Available 24/7
             </motion.p>
           </div>
         </motion.div>
 
-        {/* Gradient fade to next section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </section>
 
-      {/* Tarot Reader Introduction */}
       <section className="py-24 bg-background">
         <div className="container px-4">
           <motion.div 
@@ -232,15 +231,14 @@ export default function HomePage() {
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Imagine having a spiritual guide available anytime, who listens without judgment and answers with wisdom. Our AI understands the ancient language of the cards and speaks to your unique journey with compassion and insight.
               </p>
-              <Button asChild className="btn-premium rounded-full px-8">
-                <Link href="/tarot">Experience Your First Reading</Link>
+              <Button onClick={openChat} className="btn-premium rounded-full px-8">
+                Start Your Reading
               </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* How It Works */}
       <section className="py-24 bg-gradient-to-b from-background to-muted/30">
         <div className="container px-4">
           <motion.div 
@@ -289,7 +287,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Guidance */}
       <section className="py-24 bg-muted/30">
         <div className="container px-4">
           <motion.div 
@@ -343,7 +340,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="py-24 bg-background">
         <div className="container px-4">
           <motion.div 
@@ -395,7 +391,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-24 mystical-gradient relative overflow-hidden">
         <FloatingOrbs />
         <div className="container px-4 relative z-10">
@@ -413,15 +408,13 @@ export default function HomePage() {
               Your answers await.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="btn-premium rounded-full px-8">
-                <Link href="/tarot">
-                  Start Free Reading
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
+              <Button onClick={openChat} size="lg" className="btn-premium rounded-full px-8">
+                Start Free Reading
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-border text-foreground hover:bg-accent/50">
-                <Link href="/blog">
-                  Explore Guidance
+                <Link href="/booking">
+                  Book a Session
                 </Link>
               </Button>
             </div>

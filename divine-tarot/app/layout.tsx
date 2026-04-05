@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { GinniChat } from '@/components/GinniChat'
+import { GinniChatProvider } from '@/components/GinniChatProvider'
 import './globals.css'
 
 const inter = Inter({
@@ -78,12 +79,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <GinniChat />
-          </div>
+          <GinniChatProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <GinniChat />
+            </div>
+          </GinniChatProvider>
         </ThemeProvider>
       </body>
     </html>
