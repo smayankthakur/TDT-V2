@@ -149,7 +149,7 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const handleOpenExternal = useCallback(() => {
-    window.open('https://ginnitdt.lovable.app/', '_blank', 'noopener,noreferrer')
+    window.open('https://ginni-ki-baatein.lovable.app/', '_blank', 'noopener,noreferrer')
   }, [])
 
   const handleIframeLoad = useCallback(() => {
@@ -262,7 +262,7 @@ function GinniChatBox({ isOpen, onClose }: GinniChatBoxProps) {
                 ) : (
                   <iframe
                     ref={iframeRef}
-                    src="https://ginnitdt.lovable.app/"
+                    src="https://ginni-ki-baatein.lovable.app/"
                     className="w-full h-full border-none"
                     allow="clipboard-write; encrypted-media; fullscreen"
                     onLoad={handleIframeLoad}
@@ -289,7 +289,7 @@ function GinniChatBoxMobile({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const handleOpenExternal = useCallback(() => {
-    window.open('https://ginnitdt.lovable.app/', '_blank', 'noopener,noreferrer')
+    window.open('https://ginni-ki-baatein.lovable.app/', '_blank', 'noopener,noreferrer')
   }, [])
 
   const handleIframeLoad = useCallback(() => {
@@ -361,7 +361,7 @@ function GinniChatBoxMobile({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             ) : (
               <iframe
                 ref={iframeRef}
-                src="https://ginnitdt.lovable.app/"
+                src="https://ginni-ki-baatein.lovable.app/"
                 className="w-full h-full border-none"
                 allow="clipboard-write; encrypted-media; fullscreen"
                 onLoad={handleIframeLoad}
