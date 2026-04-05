@@ -66,7 +66,7 @@ export function Footer() {
           {/* SECTION 1: Brand */}
           <div className="lg:col-span-1 space-y-5">
             <Link href="/" className="flex items-center gap-2">
-              <div className="h-[80px] w-full max-w-[200px]">
+              <div className="h-12 md:h-[80px] w-full max-w-[140px] md:max-w-[200px]">
                 <Image
                   src="/logo.png"
                   alt="The Divine Tarot"
